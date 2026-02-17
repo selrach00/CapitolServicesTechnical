@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CapitolServicesTechnical.Services\CapitolServicesTechnical.Services.csproj" />
     <ProjectReference Include="..\CapitolServicesTechnical.Infrastructure\CapitolServicesTechnical.Infrastructure.csproj" />
   </ItemGroup>
 

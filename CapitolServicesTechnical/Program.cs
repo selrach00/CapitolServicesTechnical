@@ -1,7 +1,22 @@
+using CapitolServicesTechnical.Infrastructure.Interfaces;
+using CapitolServicesTechnical.Infrastructure.Repositories;
+using CapitolServicesTechnical.Services.Interfaces;
+using CapitolServicesTechnical.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Get connection string
+var connectionString = builder.Configuration.GetConnectionString("FizzBuzzDb");
+
+// Register Infrastructure Layer dependencies
+builder.Services.AddScoped<IFizzBuzzRepository>(provider => 
+    new FizzBuzzRepository(connectionString!));
+
+// Register Services Layer dependencies
+builder.Services.AddScoped<IFizzBuzzService, FizzBuzzService>();
 
 var app = builder.Build();
 
