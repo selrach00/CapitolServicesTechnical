@@ -1,4 +1,4 @@
-namespace CapitolServicesTechnical.Infrastructure.Models;
+namespace CapitolServicesTechnical.Models;
 
 public class PartyMember
 {

@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using CapitolServicesTechnical.Infrastructure.Models;
+using CapitolServicesTechnical.Models;
 
 namespace CapitolServicesTechnical.Controllers;
 

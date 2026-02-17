@@ -19,7 +19,7 @@ https://github.com/selrach00/CapitolServicesTechnical
 ## Task 2
 - [PartyController.cs](CapitolServicesTechnical/Controllers/PartyController.cs)
 - [Index.cshtml](CapitolServicesTechnical/Views/Party/Index.cshtml)
-- [PartyMember.cs](CapitolServicesTechnical.Infrastructure/Models/PartyMember.cs)
+- [PartyMember.cs](CapitolServicesTechnical/Models/PartyMember.cs)
 
 ## Project Structure
 I'm accustomed to working in IoC (Inversion of Control) dotnet patterns. If you aren't familiar with it, it both introduces a separation of concerns between layers of the application and introduces a (usually) convenient way to unit test functions, as shown in [FizzBuzzTests.cs](CapitolServicesTechnical.Tests/FizzBuzzTests.cs).
