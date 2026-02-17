@@ -1,0 +1,52 @@
+@model List<CapitolServicesTechnical.Infrastructure.Models.PartyMember>
+
+@{
+    ViewData["Title"] = "TTRPG Party";
+}
+
+<div class="container mt-4">
+    <h1>@ViewData["Title"]</h1>
+
+    <div class="row">
+        <div class="col-md-8">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Class</th>
+                        <th>Level</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var member in Model)
+                    {
+                        <tr>
+                            <td>@member.Name</td>
+                            <td>@member.Class</td>
+                            <td>@member.Level</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-md-4">
+            <h3>Add Party Member</h3>
+            <form action="/Party/Add" method="post">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="name" name="name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="className" class="form-label">Class</label>
+                    <input type="text" class="form-control" id="className" name="className" required>
+                </div>
+                <div class="mb-3">
+                    <label for="level" class="form-label">Level</label>
+                    <input type="number" class="form-control" id="level" name="level" min="1" max="20" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Member</button>
+            </form>
+        </div>
+    </div>
+</div>

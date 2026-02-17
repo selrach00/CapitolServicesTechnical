@@ -1,36 +1,46 @@
-# CapitolServicesTechnical
+# Capitol Services Technical
 
-I wanted to demonstrate some of my experience, so I decided to spin up actual workflows and implementations of the tasks that were provided. I think it'll also help show the approach of workspace management that I'm used to. 
+I decided to spin up actual workflows and implementations of the tasks that were provided. I think it'll also help show the approach of workspace management that I'm used to. 
 
-The webapp is hosted in Azure. The FizzBuzz endpoint to trigger the Stored Producedure unfortunately won't work, because my free credits in Azure has expired and it costs money to make a database there :) I ended up spinning a local DB to test my work, so you can see the results of that below.
+The webapp is hosted in Azure. The FizzBuzz endpoint to trigger the Stored Procedure unfortunately won't work, because my free credits in Azure has expired and it costs money to make a database there :) 
 
-https://capitolservicestechnical-g5a2g3gcasfkedcj.centralus-01.azurewebsites.net
+https://capitolservicestechnical-g5a2g3gcasfkedcj.centralus-01.azurewebsites.net/party
 
 I also created a GitHub repository so that it'd be easier to share the code with others, and also to make it easier for myself to push updates to Azure as I'm testing. Azure has a really streamlined CI/CD integration with GitHub, so I've got an Actions workflow that automatically deploys to Azure when I push to the main branch from my local.
 
 https://github.com/selrach00/CapitolServicesTechnical
 
-# Task 1
+## Task 1
 - [FizzBuzzService.cs](CapitolServicesTechnical.Services/FizzBuzzService.cs)
 - [FizzBuzzTable.sql](FizzBuzzTable.sql)
 - Tests in [FizzBuzzTests.cs](CapitolServicesTechnical.Tests/FizzBuzzTests.cs)
 - Called in [HomeController.cs](CapitolServicesTechnical/Controllers/HomeController.cs)
 
+## Task 2
+- [PartyController.cs](CapitolServicesTechnical/Controllers/PartyController.cs)
+- [Index.cshtml](CapitolServicesTechnical/Views/Party/Index.cshtml)
+- [PartyMember.cs](CapitolServicesTechnical.Infrastructure/Models/PartyMember.cs)
+
 ## Project Structure
 I'm accustomed to working in IoC (Inversion of Control) dotnet patterns. If you aren't familiar with it, it both introduces a separation of concerns between layers of the application and introduces a (usually) convenient way to unit test functions, as shown in [FizzBuzzTests.cs](CapitolServicesTechnical.Tests/FizzBuzzTests.cs).
-- **CapitolServicesTechnical** - Main MVC application
+- **[CapitolServicesTechnical](CapitolServicesTechnical)** - Main MVC application
 - **[CapitolServicesTechnical.Services](CapitolServicesTechnical.Services)** - Business logic layer
 - **[CapitolServicesTechnical.Infrastructure](CapitolServicesTechnical.Infrastructure)** - Data access layer
 - **[CapitolServicesTechnical.Tests](CapitolServicesTechnical.Tests)** - Unit tests
+
+## Testing
+
+### Task 1 - Database Verification
 
 I ended up spinning up a LocalDB in SQLExpress (https://go.microsoft.com/fwlink/?linkid=866658) with the script below (containing the SQL required for the task) and tested my solutions there with a couple of simple, manual checks. 
 ```bash
 sqlcmd -S localhost\SQLEXPRESS -i FizzBuzzTable.sql
 ```
 
-Below are query results of confirming working functionality after hitting the /home/FizzBuzz endpoint are as follows. 
+Below are query results confirming working functionality after hitting the /home/FizzBuzz endpoint:
 
-### Total Records Count
+<details>
+<summary><strong>Total Records Count</strong></summary>
 
 ```bash
 sqlcmd -S localhost\SQLEXPRESS -d FizzBuzzDB -Q "SELECT COUNT(*) AS TotalRows FROM FizzBuzzResults"
@@ -41,7 +51,10 @@ sqlcmd -S localhost\SQLEXPRESS -d FizzBuzzDB -Q "SELECT COUNT(*) AS TotalRows FR
 |-----------|
 | 100       |
 
-### First 20 Entries
+</details>
+
+<details>
+<summary><strong>First 20 Entries</strong></summary>
 
 ```bash
 sqlcmd -S localhost\SQLEXPRESS -d FizzBuzzDB -Q "SELECT TOP 20 Id, Result FROM FizzBuzzResults ORDER BY Id"
@@ -71,10 +84,22 @@ sqlcmd -S localhost\SQLEXPRESS -d FizzBuzzDB -Q "SELECT TOP 20 Id, Result FROM F
 | 19 | 19       |
 | 20 | Buzz     |
 
-## Running Tests
+</details>
+
+### Task 1 - Unit Tests
 
 ```bash
 dotnet test
 ```
 
 All 5 unit tests validate the FizzBuzz logic without requiring database access.
+
+### Task 2
+
+Since the collection is in memory, no database configuration is required for this. It'll load it up once per application lifetime and reset anytime it's deployed or restarted. Or crashes, I suppose :)
+
+The Task can be accessed on the live Azure server at: https://capitolservicestechnical-g5a2g3gcasfkedcj.centralus-01.azurewebsites.net/party
+
+Of course, you can run it on your local and access it via localhost as well.
+
+You might notice I didn't use the IoC implementations for this task, but I decided to do that since the requirements were clear about having both methods on the controller to handle serving the view and adding a new entry.
